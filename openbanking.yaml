@@ -1,0 +1,253 @@
+openapi: 3.0.1
+info:
+  title: Documentação - Open Banking API
+  description: Operações de Service Desk
+  version: 1.0.0
+  contact:
+    name: Entre em contato
+    url: www.grupodata.com.br
+
+servers:
+- url: https://servicedesk.openbankingbrasil.org.br:9203/api/v1/
+  description: Sandbox
+- url: https://servicedesk.openbankingbrasil.org.br/api/v1/
+  description: Produção
+  
+  
+paths:
+  /login:
+    post:
+      summary: Realizar Login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type:
+                object
+              properties:
+                user_name:
+                  type:
+                    string
+                password:
+                  type:
+                    string
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/loginResponse"
+
+  /sr/{id}:
+    get:
+      summary: Consulta um chamado pelo Id
+      parameters:
+      - name: id
+        in: path
+        schema:
+          type: integer
+        required: true
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/chamado"
+  /sr:
+    get:
+      summary: Consultar lista de chamados
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/chamados"
+    post:
+      summary: Abertura de Chamado - Novo Requisitante
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/aberturaChamadoRequest"
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/chamado"
+    put:
+      summary: Alterar Chamado
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/alterarChamadoRequest"
+      responses:
+        200:
+          description: Sucesso
+  /list/status:
+    get:
+      summary: Consultar Lista de Status
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/list"
+                
+  /list/assigned_group:
+    get:
+      summary: Consultar Grupo de Atendimento
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/list"
+components:
+  securitySchemes:
+    cookieAuth:         # arbitrary name for the security scheme; will be used in the "security" key later
+      type: apiKey
+      in: cookie
+      name: JSESSIONID
+  schemas:
+    loginResponse:
+      type: object
+      properties:
+        language:
+          type: string
+        sysaid_version:
+          type: string
+        dateFormat:
+          type: string
+        user:
+          $ref: "#/components/schemas/user"
+    aberturaChamadoRequest:
+      type: object
+      properties:
+        info:
+          type:
+            array
+          items:
+            type: object
+            properties:
+              key:
+                type:
+                  string
+              value:
+                type:
+                  string
+    alterarChamadoRequest:
+      type: object
+      properties:
+        id:
+          type:
+            string
+        info:
+          type:
+            array
+          items:
+            type: object
+            properties:
+              key:
+                type:
+                  string
+              value:
+                type:
+                  string
+    chamados:
+      type: array
+      items:
+        $ref: "#/components/schemas/chamado"
+    chamado:
+      type:
+        object
+      properties:
+        id: 
+          type: string
+        canUpdate: 
+          type: boolean
+        canDelete: 
+          type: boolean
+        canArchive: 
+          type: boolean
+        hasChildren: 
+          type: boolean
+        info:
+          type: array
+          items:
+            $ref: "#/components/schemas/info"
+    user: 
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        isAdmin:
+          type: boolean
+        isSysAidAdmin:
+          type: boolean
+        isManager:
+          type: boolean
+        isGuest:
+          type: boolean
+        info:
+          $ref: "#/components/schemas/userInfo"
+    userInfo:
+      type: array
+      items:
+        $ref: "#/components/schemas/info"
+    info:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+        valueClass:
+          type: string
+        mandatory: 
+          type: boolean
+        editable:
+          type: boolean
+        type:
+          type: string
+        defaultValue:
+          type: string
+        keyCaption:
+          type: string
+        valueCaption:
+          type: string
+    list:
+      type: 
+        object
+      properties:
+        id:
+          type:
+            string
+        caption:
+          type:
+            string
+        values:
+          type: array
+          items:
+            $ref: "#/components/schemas/listValues"
+    listValues:
+      type:
+        object
+      properties:
+        id:
+          type:
+            string
+        caption:
+          type:
+            string
+        
+      
