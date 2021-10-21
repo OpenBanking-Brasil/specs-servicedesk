@@ -1,0 +1,210 @@
+{
+	"info": {
+		"_postman_id": "9d753589-f146-4c4c-b38c-3bbb796427d5",
+		"name": "Open Banking brasil (PROD)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "LOGIN",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"user_name\":\"USUARIO\", \"password\":\"SENHA\"}"
+				},
+				"url": {
+					"raw": "https://servicedesk.openbankingbrasil.org.br/api/v1/login?user=",
+					"protocol": "https",
+					"host": [
+						"servicedesk",
+						"openbankingbrasil",
+						"org",
+						"br"
+					],
+					"path": [
+						"api",
+						"v1",
+						"login"
+					],
+					"query": [
+						{
+							"key": "user",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Abertura de Chamado - novo requisitante",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"info\": [{\"key\":\"title\", \"value\":\"Solicitação para criação de novo usuário BY api\"},\r\n\r\n            {\"key\":\"problem_type\", \"value\":\"Service Desk_Gestão de acesso_Requisitante Service Desk\"},\r\n            \r\n            {\"key\":\"description\", \"value\":\"Solicito cadastro de novo usuário de service desk para os dados preenchidos a seguir.\\nDeclaro estar de acordo para o uso das informações fornecidas dentro do ambiente do Open Banking Brasil.\"},\r\n            \r\n            {\"key\":\"status\", \"value\":\"1\"} ,\r\n\r\n            {\"key\":\"CustomColumn6sr\", \"value\":\"JOAO BARBOSA DA SILVA\"},\r\n\r\n            {\"key\":\"CustomColumn7sr\", \"value\":\"JJBS@REMAIL.COM.BR\"},\r\n\r\n            {\"key\":\"CustomColumn8sr\", \"value\":\"(11) 99999-0908\"},\r\n\r\n            {\"key\":\"CustomColumn9sr\", \"value\":\"CIA Banking\"},\r\n\r\n            {\"key\":\"CustomColumn10sr\", \"value\":\"1\"},\r\n            \r\n            {\"key\":\"assigned_group\", \"value\":\"10\"}]\r\n}\r\n"
+				},
+				"url": {
+					"raw": "https://servicedesk.openbankingbrasil.org.br/api/v1/sr?type=10&template=39",
+					"protocol": "https",
+					"host": [
+						"servicedesk",
+						"openbankingbrasil",
+						"org",
+						"br"
+					],
+					"path": [
+						"api",
+						"v1",
+						"sr"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "10"
+						},
+						{
+							"key": "template",
+							"value": "39"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request chamado especifico",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://servicedesk.openbankingbrasil.org.br/api/v1/sr/398?fields=insert_time,id,description,title,status,assigned_group",
+					"protocol": "https",
+					"host": [
+						"servicedesk",
+						"openbankingbrasil",
+						"org",
+						"br"
+					],
+					"path": [
+						"api",
+						"v1",
+						"sr",
+						"398"
+					],
+					"query": [
+						{
+							"key": "fields",
+							"value": "insert_time,id,description,title,status,assigned_group"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consulta lista de chamados",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://servicedesk.openbankingbrasil.org.br/api/v1/sr?fields=id,update_time,status,insert_time&status=1",
+					"protocol": "https",
+					"host": [
+						"servicedesk",
+						"openbankingbrasil",
+						"org",
+						"br"
+					],
+					"path": [
+						"api",
+						"v1",
+						"sr"
+					],
+					"query": [
+						{
+							"key": "fields",
+							"value": "id,update_time,status,insert_time"
+						},
+						{
+							"key": "status",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Alterando chamado",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n    \"id\": \"947\",\r\n    \"info\": [\r\n                {\"key\":\"status\", \"value\": \"1\"},\r\n                {\"key\": \"problem_type\", \"value\": \"Incidentes_Portal Open Banking_erro\"}\r\n\r\n            ]\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://servicedesk.openbankingbrasil.org.br:9203/api/v1/sr/947",
+					"protocol": "https",
+					"host": [
+						"servicedesk",
+						"openbankingbrasil",
+						"org",
+						"br"
+					],
+					"port": "9203",
+					"path": [
+						"api",
+						"v1",
+						"sr",
+						"947"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lista de status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://servicedesk.openbankingbrasil.org.br/api/v1/list/status",
+					"protocol": "https",
+					"host": [
+						"servicedesk",
+						"openbankingbrasil",
+						"org",
+						"br"
+					],
+					"path": [
+						"api",
+						"v1",
+						"list",
+						"status"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
